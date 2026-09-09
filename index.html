@@ -61,12 +61,11 @@
     .btn-pc     { background-color: #3b82f6; }
     .btn-ipad   { background-color: #8b5cf6; }
 
-    /* メッセージのスタイル（拡大＋強調設定） */
+    /* メッセージのスタイル */
     .status {
       text-align: center; font-weight: bold;
-      font-size: 1.15rem; /* サイズ拡大 */
-      line-height: 1.5; min-height: 1.5em; margin-top: 16px; padding: 10px;
-      border-radius: 6px;
+      font-size: 1.15rem; line-height: 1.5; min-height: 1.5em;
+      margin-top: 16px; padding: 10px; border-radius: 6px;
     }
     .success {
       color: #1e8e3e; background-color: #e6f4ea; border: 1px solid #ceead6;
@@ -164,6 +163,9 @@
     const email = localStorage.getItem('cg_user_email');
     const remarks = document.getElementById('remarks').value.trim();
 
+    // メールアドレスから@より前（アカウント）を抽出
+    const accountName = email.split('@')[0];
+
     if (!WEBHOOK_URL || WEBHOOK_URL.includes("YOUR_WEBHOOK_URL_HERE")) {
       showStatus("Webhook URLが設定されていません", "error");
       return;
@@ -171,11 +173,18 @@
 
     showStatus("送信中...", "");
 
-    // Gmailで即座に返信メールが開くURLを生成 (https://〜 で始まるためGoogle Chat上でクリック可能な青文字リンクになります)
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(`【情シス】CloudGateアカウントロック対応（${fullName}様）`)}`;
+    // 返信メール用の各種設定
+    const mailSubject = "【情シス】アカウントロック解除連絡】";
+    const mailCc = "brn330@nippan-inc.co.jp";
+    const mailBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
 
-    let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
+    // Gmailの新規作成画面用URLの生成 (To, CC, Subject, Body)
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${encodeURIComponent(mailCc)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
+    // Google Chat への投稿メッセージ（アカウント項目を追加）
+    let chatMessage = ⚠️ *【アカウントロック発生】*\n`;
     chatMessage += `*送信者*: ${fullName}\n`;
+    chatMessage += `*アカウント*: ${accountName}\n`;
     chatMessage += `*対象機器*: ${device}\n`;
     if (remarks) {
       chatMessage += `*備考*: ${remarks}\n`;
@@ -190,7 +199,6 @@
       });
 
       if (response.ok) {
-        // 文言を「情シスへ解除依頼を送信しました」に変更
         showStatus("情シスへ解除依頼を送信しました", "success");
         document.getElementById('remarks').value = ""; // 備考をリセット
       } else {
