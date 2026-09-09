@@ -3,80 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウントロック通知</title>
-  <!-- iPhone表示設定 -->
+  <title>CloudGate ロック解除依頼</title>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="ロック通知">
+  <meta name="apple-mobile-web-app-title" content="ロック解除">
 
-  <!-- インライン Web App Manifest（ホーム画面追加用） -->
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%83%AD%E3%83%83%E3%82%AF%E9%80%9A%E7%9F%A5%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E9%80%9A%E7%9F%A5%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f6f9%22%2C%22theme_color%22%3A%22%231a73e8%22%7D">
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22CloudGate%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f5f5%22%2C%22theme_color%22%3A%22%2326b396%22%7D">
 
   <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f4f6f9; margin: 0; padding: 16px; color: #333; }
-    .container { max-width: 500px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1 { font-size: 1.25rem; margin-top: 0; color: #1a73e8; text-align: center; }
-    .section { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-    label { display: block; font-weight: bold; font-size: 0.85rem; margin-bottom: 6px; color: #555; }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { background-color: #f5f7f8; margin: 0; padding: 20px 12px; color: #333; }
+    
+    .card {
+      max-width: 480px; margin: 0 auto; background: #ffffff;
+      border-radius: 12px; padding: 24px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    
+    /* 1枚目画像風ヘッダー */
+    .header-box {
+      background-color: #26b396; color: #ffffff;
+      padding: 18px 12px; border-radius: 8px;
+      text-align: center; margin-bottom: 16px;
+    }
+    .header-title { font-size: 1.2rem; font-weight: bold; margin: 0; }
+    
+    .sub-text {
+      text-align: center; font-size: 0.85rem; color: #666;
+      margin-bottom: 24px; line-height: 1.4;
+    }
+    
+    .form-group { margin-bottom: 18px; }
+    .form-row { display: flex; gap: 10px; }
+    .form-col { flex: 1; }
+    
+    label { display: block; font-weight: bold; font-size: 0.88rem; margin-bottom: 6px; color: #222; }
+    .required { color: #d93025; margin-left: 4px; font-size: 0.8rem; }
+    
     input[type="text"], input[type="email"], textarea {
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; margin-bottom: 10px;
+      width: 100%; padding: 12px; border: 1px solid #e0e0e0;
+      background-color: #f8f9fa; border-radius: 6px; font-size: 0.95rem;
+      outline: none; transition: border 0.2s, background-color 0.2s;
     }
-    textarea { resize: vertical; height: 70px; }
-    .btn {
-      width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold;
-      color: #fff; cursor: pointer; margin-bottom: 10px; transition: opacity 0.2s;
+    input:focus, textarea:focus {
+      border-color: #26b396; background-color: #fff;
     }
-    .btn:active { opacity: 0.8; }
-    .btn-iphone { background-color: #007aff; }
-    .btn-pc     { background-color: #34a853; }
-    .btn-ipad   { background-color: #5856d6; }
-    .btn-save   { background-color: #5f6368; font-size: 0.9rem; padding: 10px; }
-    .status { text-align: center; font-weight: bold; margin-top: 10px; font-size: 0.9rem; min-height: 1.2em; }
-    .success { color: #2e7d32; }
-    .error { color: #d32f2f; }
-    .note { font-size: 0.75rem; color: #666; margin-top: -6px; margin-bottom: 10px; }
+    textarea { height: 75px; resize: vertical; }
+
+    .btn-submit {
+      width: 100%; padding: 14px; border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: bold; color: #fff;
+      cursor: pointer; transition: opacity 0.2s; margin-top: 6px; margin-bottom: 10px;
+    }
+    .btn-submit:active { opacity: 0.85; }
+    
+    .btn-iphone { background-color: #26b396; }
+    .btn-pc     { background-color: #3b82f6; }
+    .btn-ipad   { background-color: #8b5cf6; }
+
+    .status { text-align: center; font-weight: bold; font-size: 0.88rem; min-height: 1.2em; margin-top: 12px; }
+    .success { color: #1e8e3e; }
+    .error { color: #d93025; }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>アカウントロック通知</h1>
+<div class="card">
+  <div class="header-box">
+    <h1 class="header-title">CloudGate ロック解除依頼フォーム</h1>
+  </div>
+  
+  <p class="sub-text">必要事項を入力して「送信」ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
 
-  <!-- 設定エリア (localStorage保存) -->
-  <div class="section">
-    <label for="userName">氏名 <span style="color:red">*</span></label>
-    <input type="text" id="userName" placeholder="例：山田 太郎">
-
-    <label for="userEmail">メールアドレス <span style="color:red">*</span></label>
-    <input type="email" id="userEmail" placeholder="例：t.yamada@example.com">
-    <div class="note">※情シスからの返信宛先になります</div>
-
-    <button class="btn btn-save" onclick="saveSettings()">設定を保存（初回のみ）</button>
+  <!-- 送信者情報 -->
+  <div class="form-group form-row">
+    <div class="form-col">
+      <label for="lastName">姓<span class="required">※必須</span></label>
+      <input type="text" id="lastName" placeholder="例：日販">
+    </div>
+    <div class="form-col">
+      <label for="firstName">名<span class="required">※必須</span></label>
+      <input type="text" id="firstName" placeholder="例：太郎">
+    </div>
   </div>
 
-  <!-- 備考入力エリア -->
-  <div class="section" style="border-bottom: none; margin-bottom: 0;">
+  <div class="form-group">
+    <label for="userEmail">メールアドレス<span class="required">※必須</span></label>
+    <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
+  </div>
+
+  <div class="form-group">
     <label for="remarks">備考（任意）</label>
-    <textarea id="remarks" placeholder="例：会議中のため○時以降に連絡希望、エラーコードが表示された等"></textarea>
-
-    <label>該当する機器のボタンを押して送信</label>
-    <button class="btn btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone でロック</button>
-    <button class="btn btn-pc" onclick="sendNotification('PC')">💻 PC でロック</button>
-    <button class="btn btn-ipad" onclick="sendNotification('iPad')">タブレット (iPad) でロック</button>
-
-    <div id="status" class="status"></div>
+    <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
   </div>
+
+  <!-- 対象機器別ボタン -->
+  <div class="form-group" style="margin-top: 24px;">
+    <label style="margin-bottom: 10px;">対象機器を選んで送信</label>
+    <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone でロック</button>
+    <button class="btn-submit btn-pc" onclick="sendNotification('PC')">💻 PC でロック</button>
+    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">タブレット (iPad) でロック</button>
+  </div>
+
+  <div id="status" class="status"></div>
 </div>
 
 <script>
-  // ★ ここに手順1で取得した Webhook URL を貼り付けてください
-  const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
+  // ★ ここに Webhook URL を貼り付けてください
+  const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
 
   // 画面読み込み時に保存済みデータをセット
   window.onload = function() {
-    if (localStorage.getItem('cg_user_name')) {
-      document.getElementById('userName').value = localStorage.getItem('cg_user_name');
+    if (localStorage.getItem('cg_last_name')) {
+      document.getElementById('lastName').value = localStorage.getItem('cg_last_name');
+    }
+    if (localStorage.getItem('cg_first_name')) {
+      document.getElementById('firstName').value = localStorage.getItem('cg_first_name');
     }
     if (localStorage.getItem('cg_user_email')) {
       document.getElementById('userEmail').value = localStorage.getItem('cg_user_email');
@@ -84,54 +126,49 @@
     registerServiceWorker();
   };
 
-  // 個人情報の保存
+  // 入力値の確認とローカル保存
   function saveSettings() {
-    const name = document.getElementById('userName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
     const email = document.getElementById('userEmail').value.trim();
 
-    if (!name || !email) {
-      showStatus("氏名とメールアドレスを入力してください", "error");
+    if (!lastName || !firstName || !email) {
+      showStatus("「姓」「名」「メールアドレス」をすべて入力してください", "error");
       return false;
     }
 
-    localStorage.setItem('cg_user_name', name);
+    localStorage.setItem('cg_last_name', lastName);
+    localStorage.setItem('cg_first_name', firstName);
     localStorage.setItem('cg_user_email', email);
-    showStatus("設定を端末に保存しました", "success");
     return true;
   }
 
   // 通知送信処理
   async function sendNotification(device) {
-    const statusDiv = document.getElementById('status');
-    
-    // 設定が保存されていない、または変更されている場合のガード
     if (!saveSettings()) return;
 
-    const name = localStorage.getItem('cg_user_name');
+    const lastName = localStorage.getItem('cg_last_name');
+    const firstName = localStorage.getItem('cg_first_name');
+    const fullName = `${lastName} ${firstName}`;
     const email = localStorage.getItem('cg_user_email');
     const remarks = document.getElementById('remarks').value.trim();
 
-    if (WEBHOOK_URL === "YOUR_WEBHOOK_URL_HERE" || !WEBHOOK_URL) {
-      showStatus("Webhook URLが設定されていません（HTML内のコードをご確認ください）", "error");
+    if (!WEBHOOK_URL || WEBHOOK_URL === "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc") {
+      showStatus("Webhook URLが設定されていません（HTML内の設定をご確認ください）", "error");
       return;
     }
 
-    statusDiv.className = "status";
-    statusDiv.innerText = "送信中...";
+    showStatus("送信中...", "");
 
-    // mailto リンクの構築 (件名と本文をあらかじめセット)
-    const mailSubject = encodeURIComponent(`【情シス】CloudGateアカウントロック対応（${name}様）`);
-    const mailBody = encodeURIComponent(`${name} 様\n\nお疲れ様です。情報システム担当です。\nアカウントロック解除処理を行いましたのでご確認ください。\n\n対象機器: ${device}`);
-    const mailtoUrl = `mailto:${email}?subject=${mailSubject}&body=${mailBody}`;
-
-    // Google Chat 形式の本文構築
+    // Google Chat 側で自動的に青文字リンク化される形式に調整
+    // (mailto: にパラメータを付けず、シンプルにメアドを記載することで確実にタップ・送信できるようにします)
     let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
-    chatMessage += `*送信者*: ${name}\n`;
+    chatMessage += `*送信者*: ${fullName}\n`;
     chatMessage += `*対象機器*: ${device}\n`;
     if (remarks) {
       chatMessage += `*備考*: ${remarks}\n`;
     }
-    chatMessage += `*本人連絡*: <${mailtoUrl}|▶ ${name} 様へメール返信>`;
+    chatMessage += `*本人連絡用メールアドレス*:\nmailto:${email}`;
 
     try {
       const response = await fetch(WEBHOOK_URL, {
@@ -142,12 +179,12 @@
 
       if (response.ok) {
         showStatus("情シススペースへ通知しました！", "success");
-        document.getElementById('remarks').value = ""; // 備考をクリア
+        document.getElementById('remarks').value = ""; // 備考をリセット
       } else {
         showStatus(`送信失敗 (${response.status})`, "error");
       }
     } catch (err) {
-      showStatus("ネットワークエラー。接続を確認してください。", "error");
+      showStatus("送信に失敗しました。ネット接続をご確認ください。", "error");
       console.error(err);
     }
   }
@@ -158,7 +195,6 @@
     statusDiv.innerText = msg;
   }
 
-  // ダミーの Service Worker 登録（PWA要件を満たし「ホーム画面に追加」をスムーズにするため）
   function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
       const swCode = `self.addEventListener('fetch', (e) => {});`;
