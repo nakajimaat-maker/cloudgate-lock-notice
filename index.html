@@ -20,7 +20,6 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
-    /* ヘッダー */
     .header-box {
       background-color: #26b396; color: #ffffff;
       padding: 18px 12px; border-radius: 8px;
@@ -61,7 +60,6 @@
     .btn-pc     { background-color: #3b82f6; }
     .btn-ipad   { background-color: #8b5cf6; }
 
-    /* メッセージのスタイル */
     .status {
       text-align: center; font-weight: bold;
       font-size: 1.15rem; line-height: 1.5; min-height: 1.5em;
@@ -84,7 +82,6 @@
   
   <p class="sub-text">必要事項を入力して「送信」ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
 
-  <!-- 送信者情報 -->
   <div class="form-group form-row">
     <div class="form-col">
       <label for="lastName">姓<span class="required">※必須</span></label>
@@ -101,15 +98,13 @@
     <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
   </div>
 
-  <!-- 対象機器別ボタン -->
   <div class="form-group" style="margin-top: 24px;">
     <label style="margin-bottom: 10px;">対象機器を選んで送信</label>
-    <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone</button>
-    <button class="btn-submit btn-pc" onclick="sendNotification('PC')">💻 PC</button>
-    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">📱 iPad</button>
+    <button class="btn-submit btn-iphone" type="button" onclick="sendNotification('iPhone')">📱 iPhone</button>
+    <button class="btn-submit btn-pc" type="button" onclick="sendNotification('PC')">💻 PC</button>
+    <button class="btn-submit btn-ipad" type="button" onclick="sendNotification('iPad')">📱 iPad</button>
   </div>
 
-  <!-- 備考欄 -->
   <div class="form-group">
     <label for="remarks">備考（任意）</label>
     <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
@@ -119,24 +114,24 @@
 </div>
 
 <script>
-  // Webhook URL
   const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
-  // 画面読み込み時に保存済みデータをセット
   window.onload = function() {
-    if (localStorage.getItem('cg_last_name')) {
-      document.getElementById('lastName').value = localStorage.getItem('cg_last_name');
+    try {
+      if (localStorage.getItem('cg_last_name')) {
+        document.getElementById('lastName').value = localStorage.getItem('cg_last_name');
+      }
+      if (localStorage.getItem('cg_first_name')) {
+        document.getElementById('firstName').value = localStorage.getItem('cg_first_name');
+      }
+      if (localStorage.getItem('cg_user_email')) {
+        document.getElementById('userEmail').value = localStorage.getItem('cg_user_email');
+      }
+    } catch(e) {
+      console.error(e);
     }
-    if (localStorage.getItem('cg_first_name')) {
-      document.getElementById('firstName').value = localStorage.getItem('cg_first_name');
-    }
-    if (localStorage.getItem('cg_user_email')) {
-      document.getElementById('userEmail').value = localStorage.getItem('cg_user_email');
-    }
-    registerServiceWorker();
   };
 
-  // 入力値の確認とローカル保存
   function saveSettings() {
     const lastName = document.getElementById('lastName').value.trim();
     const firstName = document.getElementById('firstName').value.trim();
@@ -147,51 +142,45 @@
       return false;
     }
 
-    localStorage.setItem('cg_last_name', lastName);
-    localStorage.setItem('cg_first_name', firstName);
-    localStorage.setItem('cg_user_email', email);
+    try {
+      localStorage.setItem('cg_last_name', lastName);
+      localStorage.setItem('cg_first_name', firstName);
+      localStorage.setItem('cg_user_email', email);
+    } catch(e) {
+      console.error(e);
+    }
     return true;
   }
 
-  // 通知送信処理
   async function sendNotification(device) {
-    if (!saveSettings()) return;
-
-    const lastName = localStorage.getItem('cg_last_name');
-    const firstName = localStorage.getItem('cg_first_name');
-    const fullName = `${lastName} ${firstName}`;
-    const email = localStorage.getItem('cg_user_email');
-    const remarks = document.getElementById('remarks').value.trim();
-
-    // メールアドレスから@より前（アカウント）を抽出
-    const accountName = email.split('@')[0];
-
-    if (!WEBHOOK_URL || WEBHOOK_URL.includes("YOUR_WEBHOOK_URL_HERE")) {
-      showStatus("Webhook URLが設定されていません", "error");
-      return;
-    }
-
-    showStatus("送信中...", "");
-
-    // 返信メール用の各種設定
-    const mailSubject = "【情シス】アカウントロック解除連絡】";
-    const mailCc = "brn330@nippan-inc.co.jp";
-    const mailBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
-
-    // Gmailの新規作成画面用URLの生成 (To, CC, Subject, Body)
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${encodeURIComponent(mailCc)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-
-    // Google Chat への投稿メッセージ（アカウント項目を追加）
-    let chatMessage = ⚠️ *【アカウントロック発生】*\n`;
-    chatMessage += `*送信者*: ${fullName}\n`;
-    chatMessage += `*アカウント*: ${accountName}\n`;
-    chatMessage += `*対象機器*: ${device}\n`;
-    if (remarks) {
-      chatMessage += `*備考*: ${remarks}\n`;
-    }
-    chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
-
     try {
+      if (!saveSettings()) return;
+
+      const lastName = document.getElementById('lastName').value.trim();
+      const firstName = document.getElementById('firstName').value.trim();
+      const fullName = `${lastName} ${firstName}`;
+      const email = document.getElementById('userEmail').value.trim();
+      const remarks = document.getElementById('remarks').value.trim();
+
+      const accountName = email.includes('@') ? email.split('@')[0] : email;
+
+      showStatus("送信中...", "");
+
+      const mailSubject = "【情シス】アカウントロック解除連絡】";
+      const mailCc = "brn330@nippan-inc.co.jp";
+      const mailBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
+
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${encodeURIComponent(mailCc)}&su=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+
+      let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
+      chatMessage += `*送信者*: ${fullName}\n`;
+      chatMessage += `*アカウント*: ${accountName}\n`;
+      chatMessage += `*対象機器*: ${device}\n`;
+      if (remarks) {
+        chatMessage += `*備考*: ${remarks}\n`;
+      }
+      chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
+
       const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -200,12 +189,12 @@
 
       if (response.ok) {
         showStatus("情シスへ解除依頼を送信しました", "success");
-        document.getElementById('remarks').value = ""; // 備考をリセット
+        document.getElementById('remarks').value = "";
       } else {
         showStatus(`送信失敗 (${response.status})`, "error");
       }
     } catch (err) {
-      showStatus("送信に失敗しました。ネット接続をご確認ください。", "error");
+      showStatus(`エラー発生: ${err.message || err}`, "error");
       console.error(err);
     }
   }
@@ -214,15 +203,6 @@
     const statusDiv = document.getElementById('status');
     statusDiv.className = `status ${type}`;
     statusDiv.innerText = msg;
-  }
-
-  function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-      const swCode = `self.addEventListener('fetch', (e) => {});`;
-      const blob = new Blob([swCode], { type: 'application/javascript' });
-      const swUrl = URL.createObjectURL(blob);
-      navigator.serviceWorker.register(swUrl).catch(() => {});
-    }
   }
 </script>
 
