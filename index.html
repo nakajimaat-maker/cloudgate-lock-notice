@@ -8,17 +8,17 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ロック解除">
 
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%2310b981%22%7D">
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%23acefe5%22%7D">
 
   <style>
     :root {
-      --primary: #10b981;       /* メインカラー：ミントグリーン */
-      --primary-dark: #059669;  /* ホバー・アクティブ用 */
-      --bg-color: #f8fafc;      /* 背景：明るいグレー */
+      --base-color: #acefe5;       /* 指定のベース色 */
+      --primary-dark: #129d85;     /* テキスト・アクセント用の濃いグリーン */
+      --bg-color: #f4fbf9;          /* 明るい背景色 */
       --card-bg: #ffffff;
-      --text-main: #1e293b;    /* テキスト：ダークグレー */
-      --text-sub: #64748b;     /* サブテキスト：マイルドグレー */
-      --border-color: #e2e8f0; /* 薄いボーダー */
+      --text-main: #1f2937;
+      --text-sub: #6b7280;
+      --border-color: #e5e7eb;
       --error-color: #ef4444;
     }
 
@@ -33,54 +33,72 @@
     
     /* ヘッダー */
     .header-box {
-      text-align: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-color);
-      padding-bottom: 12px;
+      background-color: var(--base-color);
+      border-radius: 12px;
+      padding: 14px 10px; text-align: center; margin-bottom: 16px;
     }
-    .header-title { font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin: 0; line-height: 1.35; letter-spacing: 0.02em; }
+    .header-title { font-size: 1.2rem; font-weight: 700; color: #0f584c; margin: 0; line-height: 1.35; }
     
     .sub-text {
       text-align: center; font-size: 0.78rem; color: var(--text-sub);
       margin-bottom: 16px; line-height: 1.4;
     }
     
-    .form-group { margin-bottom: 12px; }
+    .form-group { margin-bottom: 14px; }
     .form-row { display: flex; gap: 8px; }
     .form-col { flex: 1; }
     
-    label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 4px; color: var(--text-main); }
+    label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 6px; color: var(--text-main); }
     .required { color: var(--error-color); margin-left: 2px; font-size: 0.75rem; }
     
-    input[type="text"], input[type="email"], textarea {
+    input[type="text"], input[type="email"] {
       width: 100%; padding: 10px 12px; border: 1px solid var(--border-color);
-      background-color: #f1f5f9; border-radius: 8px; font-size: 0.9rem;
+      background-color: #f9fafb; border-radius: 8px; font-size: 0.9rem;
       color: var(--text-main); outline: none; transition: all 0.2s ease;
     }
-    input:focus, textarea:focus {
-      border-color: var(--primary); background-color: #fff; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    input:focus {
+      border-color: var(--primary-dark); background-color: #fff; box-shadow: 0 0 0 3px rgba(172, 239, 229, 0.4);
     }
-    textarea { height: 50px; resize: vertical; }
 
-    /* ボタン群（洗練された3列並び） */
+    /* 対象機器選択ボタン */
     .btn-group-row {
       display: flex; gap: 8px; margin-top: 4px;
     }
 
     .btn-device {
-      flex: 1; padding: 10px 4px; border: 1px solid var(--border-color);
-      border-radius: 8px; font-size: 0.85rem; font-weight: 600;
-      background-color: #ffffff; color: var(--text-main);
+      flex: 1; padding: 12px 4px; border: 2px solid transparent;
+      border-radius: 10px; font-size: 0.88rem; font-weight: 700;
       cursor: pointer; transition: all 0.2s ease; text-align: center;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
-    .btn-device:active {
-      background-color: var(--primary); color: #ffffff; border-color: var(--primary);
-      transform: translateY(1px);
+
+    /* 各機器ボタンのカラー（通常時） */
+    .btn-iphone { background-color: #e6f8f5; color: #0d7363; border-color: #bcefe7; }
+    .btn-pc     { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .btn-ipad   { background-color: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+
+    /* 選択された状態のスタイル */
+    .btn-device.selected {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
+    .btn-iphone.selected { background-color: #129d85; color: #ffffff; border-color: #129d85; }
+    .btn-pc.selected     { background-color: #2563eb; color: #ffffff; border-color: #2563eb; }
+    .btn-ipad.selected   { background-color: #7c3aed; color: #ffffff; border-color: #7c3aed; }
+
+    /* 送信ボタン */
+    .btn-send {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: bold; background-color: var(--base-color); color: #0f584c;
+      cursor: pointer; transition: all 0.2s; margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(172, 239, 229, 0.6);
+    }
+    .btn-send:active { transform: translateY(1px); opacity: 0.9; }
 
     .status-error {
       text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--error-color);
       background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px;
-      padding: 8px; margin-top: 10px; display: none;
+      padding: 8px; margin-top: 12px; display: none;
     }
 
     /* 送信完了画面用スタイル */
@@ -88,9 +106,9 @@
       display: none; text-align: center; padding: 24px 12px;
     }
     .success-icon {
-      width: 56px; height: 56px; background-color: #d1fae5; color: var(--primary);
+      width: 60px; height: 60px; background-color: var(--base-color); color: #0f584c;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 28px; margin: 0 auto 16px; font-weight: bold;
+      font-size: 32px; margin: 0 auto 16px; font-weight: bold;
     }
     .complete-title {
       font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;
@@ -99,11 +117,11 @@
       font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;
     }
     .btn-back {
-      width: 100%; padding: 11px; border: none; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 600; background-color: var(--primary); color: #ffffff;
+      width: 100%; padding: 12px; border: none; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; background-color: var(--base-color); color: #0f584c;
       cursor: pointer; transition: background 0.2s;
     }
-    .btn-back:active { background-color: var(--primary-dark); }
+    .btn-back:active { opacity: 0.85; }
   </style>
 </head>
 <body>
@@ -115,7 +133,7 @@
       <h1 class="header-title">アカウントロック<br>解除依頼フォーム</h1>
     </div>
     
-    <p class="sub-text">必要事項を入力し、該当する機器を選択してください。<br>（次回以降は入力情報が自動保存されます）</p>
+    <p class="sub-text">必要事項を入力の上、対象機器を選択して送信してください。<br>（次回以降は入力情報が自動保存されます）</p>
 
     <div class="form-group form-row">
       <div class="form-col">
@@ -133,19 +151,18 @@
       <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
     </div>
 
-    <div class="form-group" style="margin-top: 14px;">
-      <label style="margin-bottom: 6px;">対象機器を選んで送信</label>
+    <!-- 対象機器選択（マルチ選択ではなくどれか1つ選択） -->
+    <div class="form-group" style="margin-top: 16px;">
+      <label style="margin-bottom: 6px;">対象機器を選択<span class="required">※必須</span></label>
       <div class="btn-group-row">
-        <button class="btn-device" type="button" onclick="sendNotification('iPhone')">📱 iPhone</button>
-        <button class="btn-device" type="button" onclick="sendNotification('PC')">💻 PC</button>
-        <button class="btn-device" type="button" onclick="sendNotification('iPad')">📱 iPad</button>
+        <button id="btn-iPhone" class="btn-device btn-iphone" type="button" onclick="selectDevice('iPhone')">📱 iPhone</button>
+        <button id="btn-PC" class="btn-device btn-pc" type="button" onclick="selectDevice('PC')">💻 PC</button>
+        <button id="btn-iPad" class="btn-device btn-ipad" type="button" onclick="selectDevice('iPad')">📱 iPad</button>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="remarks">備考（任意）</label>
-      <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
-    </div>
+    <!-- 独立した送信ボタン -->
+    <button class="btn-send" type="button" onclick="submitForm()">送信する</button>
 
     <div id="errorStatus" class="status-error"></div>
   </div>
@@ -164,6 +181,8 @@
 <script>
   const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
+  let selectedDevice = ""; // 選択中の機器を保持
+
   window.onload = function() {
     try {
       if (localStorage.getItem('cg_last_name')) {
@@ -180,6 +199,21 @@
     }
   };
 
+  // 機器ボタン選択時の処理
+  function selectDevice(device) {
+    selectedDevice = device;
+    
+    // 全ボタンの選択ハイライト解除
+    document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('selected'));
+    
+    // 押されたボタンだけハイライト
+    const targetBtn = document.getElementById(`btn-${device}`);
+    if (targetBtn) {
+      targetBtn.classList.add('selected');
+    }
+    hideError();
+  }
+
   function saveSettings() {
     const lastName = document.getElementById('lastName').value.trim();
     const firstName = document.getElementById('firstName').value.trim();
@@ -187,6 +221,11 @@
 
     if (!lastName || !firstName || !email) {
       showError("「姓」「名」「メールアドレス」をすべて入力してください");
+      return false;
+    }
+
+    if (!selectedDevice) {
+      showError("対象機器を選択してください");
       return false;
     }
 
@@ -200,7 +239,7 @@
     return true;
   }
 
-  async function sendNotification(device) {
+  async function submitForm() {
     hideError();
 
     if (!saveSettings()) return;
@@ -209,11 +248,10 @@
     const firstName = document.getElementById('firstName').value.trim();
     const fullName = `${lastName} ${firstName}`;
     const email = document.getElementById('userEmail').value.trim();
-    const remarks = document.getElementById('remarks').value.trim();
+    const device = selectedDevice;
 
     const accountName = email.includes('@') ? email.split('@')[0] : email;
 
-    // 件名を修正（末尾のカッコを削除）
     const mailSubject = encodeURIComponent("【情シス】アカウントロック解除連絡");
     const mailCc = encodeURIComponent("brn330@nippan-inc.co.jp");
     const rawBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
@@ -221,13 +259,11 @@
 
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${mailCc}&su=${mailSubject}&body=${mailBody}`;
 
-    let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
+    // チャット通知文面を 🔓【アカウントロック解除依頼】に変更
+    let chatMessage = `🔓 *【アカウントロック解除依頼】*\n`;
     chatMessage += `*送信者*: ${fullName}\n`;
     chatMessage += `*アカウント*: ${accountName}\n`;
     chatMessage += `*対象機器*: ${device}\n`;
-    if (remarks) {
-      chatMessage += `*備考*: ${remarks}\n`;
-    }
     chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
 
     try {
@@ -238,8 +274,6 @@
       });
 
       if (response.ok) {
-        document.getElementById('remarks').value = "";
-        // 成功時に完了画面へ遷移
         showCompleteView();
       } else {
         showError(`送信失敗 (${response.status})`);
@@ -262,13 +296,11 @@
     errorDiv.style.display = 'none';
   }
 
-  // 送信完了画面への切り替え
   function showCompleteView() {
     document.getElementById('formView').style.display = 'none';
     document.getElementById('completeView').style.display = 'block';
   }
 
-  // フォーム画面へ戻る切り替え
   function resetFormView() {
     hideError();
     document.getElementById('completeView').style.display = 'none';
