@@ -61,9 +61,19 @@
     .btn-pc     { background-color: #3b82f6; }
     .btn-ipad   { background-color: #8b5cf6; }
 
-    .status { text-align: center; font-weight: bold; font-size: 0.88rem; min-height: 1.2em; margin-top: 12px; }
-    .success { color: #1e8e3e; }
-    .error { color: #d93025; }
+    /* メッセージのスタイル（拡大＋強調設定） */
+    .status {
+      text-align: center; font-weight: bold;
+      font-size: 1.15rem; /* サイズ拡大 */
+      line-height: 1.5; min-height: 1.5em; margin-top: 16px; padding: 10px;
+      border-radius: 6px;
+    }
+    .success {
+      color: #1e8e3e; background-color: #e6f4ea; border: 1px solid #ceead6;
+    }
+    .error {
+      color: #d93025; background-color: #fce8e6; border: 1px solid #fad2cf;
+    }
   </style>
 </head>
 <body>
@@ -154,7 +164,6 @@
     const email = localStorage.getItem('cg_user_email');
     const remarks = document.getElementById('remarks').value.trim();
 
-    // 未設定チェックの判定を修正（YOUR_WEBHOOK_URL_HERE または 空 の場合のみチェック）
     if (!WEBHOOK_URL || WEBHOOK_URL.includes("YOUR_WEBHOOK_URL_HERE")) {
       showStatus("Webhook URLが設定されていません", "error");
       return;
@@ -162,13 +171,16 @@
 
     showStatus("送信中...", "");
 
+    // Gmailで即座に返信メールが開くURLを生成 (https://〜 で始まるためGoogle Chat上でクリック可能な青文字リンクになります)
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(`【情シス】CloudGateアカウントロック対応（${fullName}様）`)}`;
+
     let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
     chatMessage += `*送信者*: ${fullName}\n`;
     chatMessage += `*対象機器*: ${device}\n`;
     if (remarks) {
       chatMessage += `*備考*: ${remarks}\n`;
     }
-    chatMessage += `*本人連絡用メールアドレス*:\nmailto:${email}`;
+    chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
 
     try {
       const response = await fetch(WEBHOOK_URL, {
@@ -178,7 +190,8 @@
       });
 
       if (response.ok) {
-        showStatus("情シススペースへ通知しました！", "success");
+        // 文言を「情シスへ解除依頼を送信しました」に変更
+        showStatus("情シスへ解除依頼を送信しました", "success");
         document.getElementById('remarks').value = ""; // 備考をリセット
       } else {
         showStatus(`送信失敗 (${response.status})`, "error");
