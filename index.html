@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウントロック解除依頼</title>
+  <title>アカウント ロック解除依頼</title>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ロック解除">
 
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22CloudGate%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f5f5%22%2C%22theme_color%22%3A%22%2326b396%22%7D">
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f5f5%22%2C%22theme_color%22%3A%22%2326b396%22%7D">
 
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
@@ -20,13 +20,13 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
     
-    /* 1枚目画像風ヘッダー */
+    /* ヘッダー */
     .header-box {
       background-color: #26b396; color: #ffffff;
       padding: 18px 12px; border-radius: 8px;
       text-align: center; margin-bottom: 16px;
     }
-    .header-title { font-size: 1.2rem; font-weight: bold; margin: 0; }
+    .header-title { font-size: 1.25rem; font-weight: bold; margin: 0; line-height: 1.4; }
     
     .sub-text {
       text-align: center; font-size: 0.85rem; color: #666;
@@ -70,10 +70,11 @@
 
 <div class="card">
   <div class="header-box">
-    <h1 class="header-title">アカウントロック解除依頼フォーム</h1>
+    <!-- タイトルを2段に変更 -->
+    <h1 class="header-title">アカウント<br>ロック解除依頼フォーム</h1>
   </div>
   
-  <p class="sub-text">必要事項を入力して対象機器ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
+  <p class="sub-text">必要事項を入力して「送信」ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
 
   <!-- 送信者情報 -->
   <div class="form-group form-row">
@@ -92,17 +93,18 @@
     <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
   </div>
 
-  <div class="form-group">
-    <label for="remarks">備考（任意）</label>
-    <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
-  </div>
-
-  <!-- 対象機器別ボタン -->
+  <!-- 対象機器別ボタン（表記を変更） -->
   <div class="form-group" style="margin-top: 24px;">
     <label style="margin-bottom: 10px;">対象機器を選んで送信</label>
     <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone</button>
     <button class="btn-submit btn-pc" onclick="sendNotification('PC')">💻 PC</button>
-    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">📲 iPad</button>
+    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">📱 iPad</button>
+  </div>
+
+  <!-- 備考欄を対象機器の下に配置 -->
+  <div class="form-group">
+    <label for="remarks">備考（任意）</label>
+    <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
   </div>
 
   <div id="status" class="status"></div>
@@ -110,7 +112,7 @@
 
 <script>
   // ★ ここに Webhook URL を貼り付けてください
-  const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
+  const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
 
   // 画面読み込み時に保存済みデータをセット
   window.onload = function() {
@@ -160,8 +162,6 @@
 
     showStatus("送信中...", "");
 
-    // Google Chat 側で自動的に青文字リンク化される形式に調整
-    // (mailto: にパラメータを付けず、シンプルにメアドを記載することで確実にタップ・送信できるようにします)
     let chatMessage = `⚠️ *【アカウントロック発生】*\n`;
     chatMessage += `*送信者*: ${fullName}\n`;
     chatMessage += `*対象機器*: ${device}\n`;
@@ -178,7 +178,7 @@
       });
 
       if (response.ok) {
-        showStatus("情シスへ解除依頼を送信しました！", "success");
+        showStatus("情シススペースへ通知しました！", "success");
         document.getElementById('remarks').value = ""; // 備考をリセット
       } else {
         showStatus(`送信失敗 (${response.status})`, "error");
