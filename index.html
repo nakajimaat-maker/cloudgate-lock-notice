@@ -70,7 +70,6 @@
 
 <div class="card">
   <div class="header-box">
-    <!-- タイトルを2段に変更 -->
     <h1 class="header-title">アカウントロック<br>解除依頼フォーム</h1>
   </div>
   
@@ -93,7 +92,7 @@
     <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
   </div>
 
-  <!-- 対象機器別ボタン（表記を変更） -->
+  <!-- 対象機器別ボタン -->
   <div class="form-group" style="margin-top: 24px;">
     <label style="margin-bottom: 10px;">対象機器を選んで送信</label>
     <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone</button>
@@ -101,7 +100,7 @@
     <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">📱 iPad</button>
   </div>
 
-  <!-- 備考欄を対象機器の下に配置 -->
+  <!-- 備考欄 -->
   <div class="form-group">
     <label for="remarks">備考（任意）</label>
     <textarea id="remarks" placeholder="例：エラー画面が表示された、折り返し連絡希望など"></textarea>
@@ -111,7 +110,7 @@
 </div>
 
 <script>
-  // ★ ここに Webhook URL を貼り付けてください
+  // Webhook URL
   const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
   // 画面読み込み時に保存済みデータをセット
@@ -155,8 +154,9 @@
     const email = localStorage.getItem('cg_user_email');
     const remarks = document.getElementById('remarks').value.trim();
 
-    if (!WEBHOOK_URL || WEBHOOK_URL === "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc") {
-      showStatus("Webhook URLが設定されていません（HTML内の設定をご確認ください）", "error");
+    // 未設定チェックの判定を修正（YOUR_WEBHOOK_URL_HERE または 空 の場合のみチェック）
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes("YOUR_WEBHOOK_URL_HERE")) {
+      showStatus("Webhook URLが設定されていません", "error");
       return;
     }
 
