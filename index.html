@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudGate ロック解除依頼</title>
+  <title>アカウントロック解除依頼</title>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ロック解除">
@@ -70,10 +70,10 @@
 
 <div class="card">
   <div class="header-box">
-    <h1 class="header-title">CloudGate ロック解除依頼フォーム</h1>
+    <h1 class="header-title">アカウントロック解除依頼フォーム</h1>
   </div>
   
-  <p class="sub-text">必要事項を入力して「送信」ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
+  <p class="sub-text">必要事項を入力して対象機器ボタンを押してください。<br>（2回目以降は氏名・メールアドレスは自動入力されます）</p>
 
   <!-- 送信者情報 -->
   <div class="form-group form-row">
@@ -100,9 +100,9 @@
   <!-- 対象機器別ボタン -->
   <div class="form-group" style="margin-top: 24px;">
     <label style="margin-bottom: 10px;">対象機器を選んで送信</label>
-    <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone でロック</button>
-    <button class="btn-submit btn-pc" onclick="sendNotification('PC')">💻 PC でロック</button>
-    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">タブレット (iPad) でロック</button>
+    <button class="btn-submit btn-iphone" onclick="sendNotification('iPhone')">📱 iPhone</button>
+    <button class="btn-submit btn-pc" onclick="sendNotification('PC')">💻 PC</button>
+    <button class="btn-submit btn-ipad" onclick="sendNotification('iPad')">📲 iPad</button>
   </div>
 
   <div id="status" class="status"></div>
@@ -110,7 +110,7 @@
 
 <script>
   // ★ ここに Webhook URL を貼り付けてください
-  const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
+  const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
   // 画面読み込み時に保存済みデータをセット
   window.onload = function() {
@@ -178,7 +178,7 @@
       });
 
       if (response.ok) {
-        showStatus("情シススペースへ通知しました！", "success");
+        showStatus("情シスへ解除依頼を送信しました！", "success");
         document.getElementById('remarks').value = ""; // 備考をリセット
       } else {
         showStatus(`送信失敗 (${response.status})`, "error");
