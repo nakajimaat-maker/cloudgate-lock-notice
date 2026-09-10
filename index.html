@@ -8,166 +8,241 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="ロック解除">
 
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%23acefe5%22%7D">
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23eef7fc%22%2C%22theme_color%22%3A%22%234db3e6%22%7D">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --base-color: #acefe5;       /* 指定のベース色 */
-      --primary-dark: #129d85;     /* テキスト・アクセント用の濃いグリーン */
-      --bg-color: #f4fbf9;          /* 明るい背景色 */
-      --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-sub: #6b7280;
-      --border-color: #e5e7eb;
-      --error-color: #ef4444;
+      --sky:        #4db3e6;
+      --sky-deep:   #2e9fd8;
+      --sky-tint:   #e4f3fb;
+      --sky-line:   #cfeaf7;
+      --bg-color:   #eef7fc;
+      --card-bg:    #ffffff;
+      --text-main:  #1f2d3a;
+      --text-sub:   #7c8b98;
+      --border-color:#e3ebf1;
+      --error-color:#ef5350;
+      --purple:     #7c6cf0;
     }
 
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    body { background-color: var(--bg-color); margin: 0; padding: 16px 12px; color: var(--text-main); }
-    
+    * {
+      box-sizing: border-box;
+      font-family: "Zen Kaku Gothic New", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      background-color: var(--bg-color);
+      margin: 0; padding: 20px 14px;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
     .card {
-      max-width: 440px; margin: 0 auto; background: var(--card-bg);
-      border-radius: 16px; padding: 20px 18px;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-    }
-    
-    /* ヘッダー */
-    .header-box {
-      background-color: var(--base-color);
-      border-radius: 12px;
-      padding: 14px 10px; text-align: center; margin-bottom: 16px;
-    }
-    .header-title { font-size: 1.2rem; font-weight: 700; color: #0f584c; margin: 0; line-height: 1.35; }
-    
-    .sub-text {
-      text-align: center; font-size: 0.78rem; color: var(--text-sub);
-      margin-bottom: 16px; line-height: 1.4;
-    }
-    
-    .form-group { margin-bottom: 14px; }
-    .form-row { display: flex; gap: 8px; }
-    .form-col { flex: 1; }
-    
-    label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 6px; color: var(--text-main); }
-    .required { color: var(--error-color); margin-left: 2px; font-size: 0.75rem; }
-    
-    input[type="text"], input[type="email"] {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border-color);
-      background-color: #f9fafb; border-radius: 8px; font-size: 0.9rem;
-      color: var(--text-main); outline: none; transition: all 0.2s ease;
-    }
-    input:focus {
-      border-color: var(--primary-dark); background-color: #fff; box-shadow: 0 0 0 3px rgba(172, 239, 229, 0.4);
+      max-width: 440px; margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 0 0 26px;
+      overflow: hidden;
+      box-shadow: 0 16px 36px -14px rgba(46, 159, 216, 0.28);
     }
 
-    /* 対象機器選択ボタン */
-    .btn-group-row {
-      display: flex; gap: 8px; margin-top: 4px;
+    .header-box {
+      background: linear-gradient(135deg, var(--sky) 0%, var(--sky-deep) 100%);
+      text-align: center;
+      padding: 28px 20px 26px;
+      color: #fff;
     }
+    .header-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 16px;
+      background: rgba(255,255,255,0.22);
+      font-size: 26px; margin-bottom: 12px;
+    }
+    .header-title {
+      font-size: 1.3rem; font-weight: 900;
+      margin: 0; line-height: 1.5; letter-spacing: 0.02em;
+    }
+
+    .body-inner { padding: 22px 20px 0; }
+
+    .sub-text {
+      text-align: center; font-size: 0.82rem;
+      color: var(--text-sub);
+      margin: 0 0 24px; line-height: 1.7;
+      font-weight: 500;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-row { display: flex; gap: 10px; }
+    .form-col { flex: 1; }
+
+    label {
+      display: block; font-weight: 700; font-size: 0.85rem;
+      margin-bottom: 8px; color: var(--text-main);
+    }
+    .required {
+      display: inline-block;
+      color: var(--error-color);
+      background: #fdeaea;
+      margin-left: 8px; font-size: 0.66rem;
+      font-weight: 700;
+      padding: 2px 8px; border-radius: 6px;
+      vertical-align: middle;
+    }
+
+    input[type="text"], input[type="email"] {
+      width: 100%; padding: 14px 15px;
+      border: 1.5px solid var(--border-color);
+      background-color: #f7fafc;
+      border-radius: 14px; font-size: 0.95rem;
+      color: var(--text-main); outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    input::placeholder { color: #b6c2cc; }
+    input:focus {
+      border-color: var(--sky);
+      background-color: #fff;
+      box-shadow: 0 0 0 3px rgba(77, 179, 230, 0.2);
+    }
+
+    .btn-group-row { display: flex; gap: 10px; margin-top: 4px; }
 
     .btn-device {
-      flex: 1; padding: 12px 4px; border: 2px solid transparent;
-      border-radius: 10px; font-size: 0.88rem; font-weight: 700;
+      flex: 1; padding: 15px 4px;
+      border: 1.5px solid var(--border-color);
+      background-color: #f7fafc;
+      border-radius: 16px; font-size: 0.9rem; font-weight: 700;
+      color: var(--text-main);
       cursor: pointer; transition: all 0.2s ease; text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+      font-family: inherit;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
     }
+    .btn-device .ico { font-size: 20px; line-height: 1; }
 
-    /* 各機器ボタンのカラー（通常時） */
-    .btn-iphone { background-color: #e6f8f5; color: #0d7363; border-color: #bcefe7; }
-    .btn-pc     { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .btn-ipad   { background-color: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
-
-    /* 選択された状態のスタイル */
     .btn-device.selected {
+      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 18px -8px rgba(46, 159, 216, 0.5);
     }
-    .btn-iphone.selected { background-color: #129d85; color: #ffffff; border-color: #129d85; }
-    .btn-pc.selected     { background-color: #2563eb; color: #ffffff; border-color: #2563eb; }
-    .btn-ipad.selected   { background-color: #7c3aed; color: #ffffff; border-color: #7c3aed; }
+    .btn-iphone.selected { background: linear-gradient(135deg, var(--sky), var(--sky-deep)); border-color: var(--sky-deep); }
+    .btn-pc.selected     { background: linear-gradient(135deg, var(--sky), var(--sky-deep)); border-color: var(--sky-deep); }
+    .btn-ipad.selected   { background: linear-gradient(135deg, var(--sky), var(--sky-deep)); border-color: var(--sky-deep); }
 
-    /* 送信ボタン */
     .btn-send {
-      width: 100%; padding: 14px; border: none; border-radius: 10px;
-      font-size: 1rem; font-weight: bold; background-color: var(--base-color); color: #0f584c;
-      cursor: pointer; transition: all 0.2s; margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(172, 239, 229, 0.6);
+      width: 100%; padding: 17px; border: none; border-radius: 999px;
+      font-size: 1.05rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--sky) 0%, var(--sky-deep) 100%);
+      color: #fff;
+      cursor: pointer; transition: all 0.2s; margin-top: 26px;
+      letter-spacing: 0.04em;
+      font-family: inherit;
+      box-shadow: 0 12px 22px -10px rgba(46, 159, 216, 0.7);
     }
-    .btn-send:active { transform: translateY(1px); opacity: 0.9; }
+    .btn-send:active { transform: translateY(1px); opacity: 0.94; }
 
     .status-error {
-      text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--error-color);
-      background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px;
-      padding: 8px; margin-top: 12px; display: none;
+      text-align: center; font-weight: 700; font-size: 0.84rem;
+      color: var(--error-color);
+      background-color: #fdeaea;
+      border: 1px solid #f8d4d4;
+      border-radius: 10px;
+      padding: 10px; margin-top: 16px; display: none;
     }
 
-    /* 送信完了画面用スタイル */
-    .complete-view {
-      display: none; text-align: center; padding: 24px 12px;
-    }
+    .complete-view { display: none; text-align: center; padding: 32px 20px 8px; }
     .success-icon {
-      width: 60px; height: 60px; background-color: var(--base-color); color: #0f584c;
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--sky), var(--sky-deep));
+      color: #fff;
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 32px; margin: 0 auto 16px; font-weight: bold;
+      font-size: 36px; margin: 0 auto 20px; font-weight: bold;
+      box-shadow: 0 10px 22px -8px rgba(46, 159, 216, 0.6);
     }
     .complete-title {
-      font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;
+      font-size: 1.18rem; font-weight: 900; color: var(--text-main); margin-bottom: 12px;
     }
     .complete-desc {
-      font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;
+      font-size: 0.85rem; color: var(--text-sub); line-height: 1.8; margin-bottom: 28px;
+      font-weight: 500;
     }
     .btn-back {
-      width: 100%; padding: 12px; border: none; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 600; background-color: var(--base-color); color: #0f584c;
-      cursor: pointer; transition: background 0.2s;
+      width: 100%; padding: 15px; border: 1.5px solid var(--sky);
+      border-radius: 999px;
+      font-size: 0.92rem; font-weight: 700;
+      background-color: #fff; color: var(--sky-deep);
+      cursor: pointer; transition: all 0.2s;
+      font-family: inherit;
     }
-    .btn-back:active { opacity: 0.85; }
+    .btn-back:active { background-color: var(--sky-tint); }
+
+    .fallback-note {
+      margin: 18px 0 4px;
+      padding: 12px 14px;
+      background: var(--sky-tint);
+      border-radius: 12px;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--text-sub);
+      font-weight: 500;
+      text-align: center;
+    }
+    .fallback-note a {
+      color: var(--sky-deep);
+      font-weight: 700;
+      word-break: break-all;
+      text-decoration: none;
+    }
+    .fallback-note a:active { opacity: 0.7; }
   </style>
 </head>
 <body>
 
 <div class="card">
-  <!-- 入力フォーム画面 -->
   <div id="formView">
     <div class="header-box">
       <h1 class="header-title">アカウントロック<br>解除依頼フォーム</h1>
     </div>
-    
-    <p class="sub-text">必要事項を入力の上、対象機器を選択して送信してください。<br>（次回以降は入力情報が自動保存されます）</p>
 
-    <div class="form-group form-row">
-      <div class="form-col">
-        <label for="lastName">姓<span class="required">※必須</span></label>
-        <input type="text" id="lastName" placeholder="例：日販">
+    <div class="body-inner">
+      <p class="sub-text">必要事項を入力の上、対象機器を選択して送信してください。<br>（次回以降は入力情報が自動保存されます）</p>
+
+      <div class="form-group form-row">
+        <div class="form-col">
+          <label for="lastName">姓<span class="required">必須</span></label>
+          <input type="text" id="lastName" placeholder="例：日販">
+        </div>
+        <div class="form-col">
+          <label for="firstName">名<span class="required">必須</span></label>
+          <input type="text" id="firstName" placeholder="例：太郎">
+        </div>
       </div>
-      <div class="form-col">
-        <label for="firstName">名<span class="required">※必須</span></label>
-        <input type="text" id="firstName" placeholder="例：太郎">
+
+      <div class="form-group">
+        <label for="userEmail">メールアドレス<span class="required">必須</span></label>
+        <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="userEmail">メールアドレス<span class="required">※必須</span></label>
-      <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
-    </div>
-
-    <!-- 対象機器選択（マルチ選択ではなくどれか1つ選択） -->
-    <div class="form-group" style="margin-top: 16px;">
-      <label style="margin-bottom: 6px;">対象機器を選択<span class="required">※必須</span></label>
-      <div class="btn-group-row">
-        <button id="btn-iPhone" class="btn-device btn-iphone" type="button" onclick="selectDevice('iPhone')"> iPhone</button>
-        <button id="btn-PC" class="btn-device btn-pc" type="button" onclick="selectDevice('PC')"> PC</button>
-        <button id="btn-iPad" class="btn-device btn-ipad" type="button" onclick="selectDevice('iPad')"> iPad</button>
+      <div class="form-group" style="margin-top: 22px;">
+        <label style="margin-bottom: 10px;">対象機器を選択<span class="required">必須</span></label>
+        <div class="btn-group-row">
+          <button id="btn-iPhone" class="btn-device btn-iphone" type="button" onclick="selectDevice('iPhone')"><span class="ico"> </span>iPhone</button>
+          <button id="btn-PC" class="btn-device btn-pc" type="button" onclick="selectDevice('PC')"><span class="ico"> </span>PC</button>
+          <button id="btn-iPad" class="btn-device btn-ipad" type="button" onclick="selectDevice('iPad')"><span class="ico"> </span>iPad</button>
+        </div>
       </div>
+
+      <button class="btn-send" type="button" onclick="submitForm()">送信する</button>
+
+      <div id="errorStatus" class="status-error"></div>
+
+      <p class="fallback-note">アプリから送信できない場合は、情シス（<a href="mailto:brn330@nippan-inc.co.jp">brn330@nippan-inc.co.jp</a>）宛にメールでご連絡いただくか、情シスまでお電話ください。</p>
     </div>
-
-    <!-- 独立した送信ボタン -->
-    <button class="btn-send" type="button" onclick="submitForm()">送信する</button>
-
-    <div id="errorStatus" class="status-error"></div>
   </div>
 
-  <!-- 送信完了画面 -->
   <div id="completeView" class="complete-view">
     <div class="success-icon">✓</div>
     <div class="complete-title">情シスへ解除依頼を送信しました</div>
@@ -181,7 +256,7 @@
 <script>
   const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
-  let selectedDevice = ""; // 選択中の機器を保持
+  let selectedDevice = "";
 
   window.onload = function() {
     try {
@@ -199,14 +274,9 @@
     }
   };
 
-  // 機器ボタン選択時の処理
   function selectDevice(device) {
     selectedDevice = device;
-    
-    // 全ボタンの選択ハイライト解除
     document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('selected'));
-    
-    // 押されたボタンだけハイライト
     const targetBtn = document.getElementById(`btn-${device}`);
     if (targetBtn) {
       targetBtn.classList.add('selected');
@@ -259,7 +329,6 @@
 
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${mailCc}&su=${mailSubject}&body=${mailBody}`;
 
-    // チャット通知文面を 【アカウントロック解除依頼】に変更
     let chatMessage = ` *【アカウントロック解除依頼】*\n`;
     chatMessage += `*送信者*: ${fullName}\n`;
     chatMessage += `*アカウント*: ${accountName}\n`;
@@ -276,10 +345,10 @@
       if (response.ok) {
         showCompleteView();
       } else {
-        showError(`送信失敗 (${response.status})`);
+        showError(`送信に失敗しました（エラーコード：${response.status}）。時間をおいて再度お試しください。`);
       }
     } catch (err) {
-      showError(`エラー発生: ${err.message || err}`);
+      showError("通信エラーが発生しました。ネットワーク接続を確認して、もう一度お試しください。");
       console.error(err);
     }
   }
