@@ -1,311 +1,311 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>アカウント ロック解除依頼</title>
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="ロック解除">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アカウント ロック解除依頼</title>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ロック解除">
 
-  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%23acefe5%22%7D">
+  <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%20%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%E4%BE%9D%E9%A0%BC%22%2C%22short_name%22%3A%22%E3%83%AD%E3%83%83%E3%82%AF%E8%A7%A3%E9%99%A4%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%23acefe5%22%7D">
 
-  <style>
-    :root {
-      --base-color: #acefe5;       /* 指定のベース色 */
-      --primary-dark: #129d85;     /* テキスト・アクセント用の濃いグリーン */
-      --bg-color: #f4fbf9;          /* 明るい背景色 */
-      --card-bg: #ffffff;
-      --text-main: #1f2937;
-      --text-sub: #6b7280;
-      --border-color: #e5e7eb;
-      --error-color: #ef4444;
-    }
+  <style>
+    :root {
+      --base-color: #acefe5;       /* 指定のベース色 */
+      --primary-dark: #129d85;     /* テキスト・アクセント用の濃いグリーン */
+      --bg-color: #f4fbf9;          /* 明るい背景色 */
+      --card-bg: #ffffff;
+      --text-main: #1f2937;
+      --text-sub: #6b7280;
+      --border-color: #e5e7eb;
+      --error-color: #ef4444;
+    }
 
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    body { background-color: var(--bg-color); margin: 0; padding: 16px 12px; color: var(--text-main); }
-    
-    .card {
-      max-width: 440px; margin: 0 auto; background: var(--card-bg);
-      border-radius: 16px; padding: 20px 18px;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-    }
-    
-    /* ヘッダー */
-    .header-box {
-      background-color: var(--base-color);
-      border-radius: 12px;
-      padding: 14px 10px; text-align: center; margin-bottom: 16px;
-    }
-    .header-title { font-size: 1.2rem; font-weight: 700; color: #0f584c; margin: 0; line-height: 1.35; }
-    
-    .sub-text {
-      text-align: center; font-size: 0.78rem; color: var(--text-sub);
-      margin-bottom: 16px; line-height: 1.4;
-    }
-    
-    .form-group { margin-bottom: 14px; }
-    .form-row { display: flex; gap: 8px; }
-    .form-col { flex: 1; }
-    
-    label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 6px; color: var(--text-main); }
-    .required { color: var(--error-color); margin-left: 2px; font-size: 0.75rem; }
-    
-    input[type="text"], input[type="email"] {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border-color);
-      background-color: #f9fafb; border-radius: 8px; font-size: 0.9rem;
-      color: var(--text-main); outline: none; transition: all 0.2s ease;
-    }
-    input:focus {
-      border-color: var(--primary-dark); background-color: #fff; box-shadow: 0 0 0 3px rgba(172, 239, 229, 0.4);
-    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body { background-color: var(--bg-color); margin: 0; padding: 16px 12px; color: var(--text-main); }
+    
+    .card {
+      max-width: 440px; margin: 0 auto; background: var(--card-bg);
+      border-radius: 16px; padding: 20px 18px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+    }
+    
+    /* ヘッダー */
+    .header-box {
+      background-color: var(--base-color);
+      border-radius: 12px;
+      padding: 14px 10px; text-align: center; margin-bottom: 16px;
+    }
+    .header-title { font-size: 1.2rem; font-weight: 700; color: #0f584c; margin: 0; line-height: 1.35; }
+    
+    .sub-text {
+      text-align: center; font-size: 0.78rem; color: var(--text-sub);
+      margin-bottom: 16px; line-height: 1.4;
+    }
+    
+    .form-group { margin-bottom: 14px; }
+    .form-row { display: flex; gap: 8px; }
+    .form-col { flex: 1; }
+    
+    label { display: block; font-weight: 600; font-size: 0.8rem; margin-bottom: 6px; color: var(--text-main); }
+    .required { color: var(--error-color); margin-left: 2px; font-size: 0.75rem; }
+    
+    input[type="text"], input[type="email"] {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border-color);
+      background-color: #f9fafb; border-radius: 8px; font-size: 0.9rem;
+      color: var(--text-main); outline: none; transition: all 0.2s ease;
+    }
+    input:focus {
+      border-color: var(--primary-dark); background-color: #fff; box-shadow: 0 0 0 3px rgba(172, 239, 229, 0.4);
+    }
 
-    /* 対象機器選択ボタン */
-    .btn-group-row {
-      display: flex; gap: 8px; margin-top: 4px;
-    }
+    /* 対象機器選択ボタン */
+    .btn-group-row {
+      display: flex; gap: 8px; margin-top: 4px;
+    }
 
-    .btn-device {
-      flex: 1; padding: 12px 4px; border: 2px solid transparent;
-      border-radius: 10px; font-size: 0.88rem; font-weight: 700;
-      cursor: pointer; transition: all 0.2s ease; text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-    }
+    .btn-device {
+      flex: 1; padding: 12px 4px; border: 2px solid transparent;
+      border-radius: 10px; font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease; text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
 
-    /* 各機器ボタンのカラー（通常時） */
-    .btn-iphone { background-color: #e6f8f5; color: #0d7363; border-color: #bcefe7; }
-    .btn-pc     { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .btn-ipad   { background-color: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
+    /* 各機器ボタンのカラー（通常時） */
+    .btn-iphone { background-color: #e6f8f5; color: #0d7363; border-color: #bcefe7; }
+    .btn-pc     { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .btn-ipad   { background-color: #f5f3ff; color: #6d28d9; border-color: #ddd6fe; }
 
-    /* 選択された状態のスタイル */
-    .btn-device.selected {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .btn-iphone.selected { background-color: #129d85; color: #ffffff; border-color: #129d85; }
-    .btn-pc.selected     { background-color: #2563eb; color: #ffffff; border-color: #2563eb; }
-    .btn-ipad.selected   { background-color: #7c3aed; color: #ffffff; border-color: #7c3aed; }
+    /* 選択された状態のスタイル */
+    .btn-device.selected {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .btn-iphone.selected { background-color: #129d85; color: #ffffff; border-color: #129d85; }
+    .btn-pc.selected     { background-color: #2563eb; color: #ffffff; border-color: #2563eb; }
+    .btn-ipad.selected   { background-color: #7c3aed; color: #ffffff; border-color: #7c3aed; }
 
-    /* 送信ボタン */
-    .btn-send {
-      width: 100%; padding: 14px; border: none; border-radius: 10px;
-      font-size: 1rem; font-weight: bold; background-color: var(--base-color); color: #0f584c;
-      cursor: pointer; transition: all 0.2s; margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(172, 239, 229, 0.6);
-    }
-    .btn-send:active { transform: translateY(1px); opacity: 0.9; }
+    /* 送信ボタン */
+    .btn-send {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: bold; background-color: var(--base-color); color: #0f584c;
+      cursor: pointer; transition: all 0.2s; margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(172, 239, 229, 0.6);
+    }
+    .btn-send:active { transform: translateY(1px); opacity: 0.9; }
 
-    .status-error {
-      text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--error-color);
-      background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px;
-      padding: 8px; margin-top: 12px; display: none;
-    }
+    .status-error {
+      text-align: center; font-weight: 600; font-size: 0.85rem; color: var(--error-color);
+      background-color: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px;
+      padding: 8px; margin-top: 12px; display: none;
+    }
 
-    /* 送信完了画面用スタイル */
-    .complete-view {
-      display: none; text-align: center; padding: 24px 12px;
-    }
-    .success-icon {
-      width: 60px; height: 60px; background-color: var(--base-color); color: #0f584c;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 32px; margin: 0 auto 16px; font-weight: bold;
-    }
-    .complete-title {
-      font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;
-    }
-    .complete-desc {
-      font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;
-    }
-    .btn-back {
-      width: 100%; padding: 12px; border: none; border-radius: 8px;
-      font-size: 0.88rem; font-weight: 600; background-color: var(--base-color); color: #0f584c;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .btn-back:active { opacity: 0.85; }
-  </style>
+    /* 送信完了画面用スタイル */
+    .complete-view {
+      display: none; text-align: center; padding: 24px 12px;
+    }
+    .success-icon {
+      width: 60px; height: 60px; background-color: var(--base-color); color: #0f584c;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin: 0 auto 16px; font-weight: bold;
+    }
+    .complete-title {
+      font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;
+    }
+    .complete-desc {
+      font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 24px;
+    }
+    .btn-back {
+      width: 100%; padding: 12px; border: none; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; background-color: var(--base-color); color: #0f584c;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-back:active { opacity: 0.85; }
+  </style>
 </head>
 <body>
 
 <div class="card">
-  <!-- 入力フォーム画面 -->
-  <div id="formView">
-    <div class="header-box">
-      <h1 class="header-title">アカウントロック<br>解除依頼フォーム</h1>
-    </div>
-    
-    <p class="sub-text">必要事項を入力の上、対象機器を選択して送信してください。<br>（次回以降は入力情報が自動保存されます）</p>
+  <!-- 入力フォーム画面 -->
+  <div id="formView">
+    <div class="header-box">
+      <h1 class="header-title">アカウントロック<br>解除依頼フォーム</h1>
+    </div>
+    
+    <p class="sub-text">必要事項を入力の上、対象機器を選択して送信してください。<br>（次回以降は入力情報が自動保存されます）</p>
 
-    <div class="form-group form-row">
-      <div class="form-col">
-        <label for="lastName">姓<span class="required">※必須</span></label>
-        <input type="text" id="lastName" placeholder="例：日販">
-      </div>
-      <div class="form-col">
-        <label for="firstName">名<span class="required">※必須</span></label>
-        <input type="text" id="firstName" placeholder="例：太郎">
-      </div>
-    </div>
+    <div class="form-group form-row">
+      <div class="form-col">
+        <label for="lastName">姓<span class="required">※必須</span></label>
+        <input type="text" id="lastName" placeholder="例：日販">
+      </div>
+      <div class="form-col">
+        <label for="firstName">名<span class="required">※必須</span></label>
+        <input type="text" id="firstName" placeholder="例：太郎">
+      </div>
+    </div>
 
-    <div class="form-group">
-      <label for="userEmail">メールアドレス<span class="required">※必須</span></label>
-      <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
-    </div>
+    <div class="form-group">
+      <label for="userEmail">メールアドレス<span class="required">※必須</span></label>
+      <input type="email" id="userEmail" placeholder="例：t.nippan@nippan-inc.co.jp">
+    </div>
 
-    <!-- 対象機器選択（マルチ選択ではなくどれか1つ選択） -->
-    <div class="form-group" style="margin-top: 16px;">
-      <label style="margin-bottom: 6px;">対象機器を選択<span class="required">※必須</span></label>
-      <div class="btn-group-row">
-        <button id="btn-iPhone" class="btn-device btn-iphone" type="button" onclick="selectDevice('iPhone')">📱 iPhone</button>
-        <button id="btn-PC" class="btn-device btn-pc" type="button" onclick="selectDevice('PC')">💻 PC</button>
-        <button id="btn-iPad" class="btn-device btn-ipad" type="button" onclick="selectDevice('iPad')">📱 iPad</button>
-      </div>
-    </div>
+    <!-- 対象機器選択（マルチ選択ではなくどれか1つ選択） -->
+    <div class="form-group" style="margin-top: 16px;">
+      <label style="margin-bottom: 6px;">対象機器を選択<span class="required">※必須</span></label>
+      <div class="btn-group-row">
+        <button id="btn-iPhone" class="btn-device btn-iphone" type="button" onclick="selectDevice('iPhone')"> iPhone</button>
+        <button id="btn-PC" class="btn-device btn-pc" type="button" onclick="selectDevice('PC')"> PC</button>
+        <button id="btn-iPad" class="btn-device btn-ipad" type="button" onclick="selectDevice('iPad')"> iPad</button>
+      </div>
+    </div>
 
-    <!-- 独立した送信ボタン -->
-    <button class="btn-send" type="button" onclick="submitForm()">送信する</button>
+    <!-- 独立した送信ボタン -->
+    <button class="btn-send" type="button" onclick="submitForm()">送信する</button>
 
-    <div id="errorStatus" class="status-error"></div>
-  </div>
+    <div id="errorStatus" class="status-error"></div>
+  </div>
 
-  <!-- 送信完了画面 -->
-  <div id="completeView" class="complete-view">
-    <div class="success-icon">✓</div>
-    <div class="complete-title">情シスへ解除依頼を送信しました</div>
-    <div class="complete-desc">
-      担当者が確認のうえ対応いたします。<br>解除完了までしばらくお待ちください。
-    </div>
-    <button class="btn-back" type="button" onclick="resetFormView()">フォームに戻る</button>
-  </div>
+  <!-- 送信完了画面 -->
+  <div id="completeView" class="complete-view">
+    <div class="success-icon">✓</div>
+    <div class="complete-title">情シスへ解除依頼を送信しました</div>
+    <div class="complete-desc">
+      担当者が確認のうえ対応いたします。<br>解除完了までしばらくお待ちください。
+    </div>
+    <button class="btn-back" type="button" onclick="resetFormView()">フォームに戻る</button>
+  </div>
 </div>
 
 <script>
-  const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
+  const WEBHOOK_URL = "https://chat.googleapis.com/v1/spaces/AAQAg-AuheE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=yIku3AGEniBwYclRszKc2IWoUpv-WOkxhBYOJbC2YPc";
 
-  let selectedDevice = ""; // 選択中の機器を保持
+  let selectedDevice = ""; // 選択中の機器を保持
 
-  window.onload = function() {
-    try {
-      if (localStorage.getItem('cg_last_name')) {
-        document.getElementById('lastName').value = localStorage.getItem('cg_last_name');
-      }
-      if (localStorage.getItem('cg_first_name')) {
-        document.getElementById('firstName').value = localStorage.getItem('cg_first_name');
-      }
-      if (localStorage.getItem('cg_user_email')) {
-        document.getElementById('userEmail').value = localStorage.getItem('cg_user_email');
-      }
-    } catch(e) {
-      console.error(e);
-    }
-  };
+  window.onload = function() {
+    try {
+      if (localStorage.getItem('cg_last_name')) {
+        document.getElementById('lastName').value = localStorage.getItem('cg_last_name');
+      }
+      if (localStorage.getItem('cg_first_name')) {
+        document.getElementById('firstName').value = localStorage.getItem('cg_first_name');
+      }
+      if (localStorage.getItem('cg_user_email')) {
+        document.getElementById('userEmail').value = localStorage.getItem('cg_user_email');
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  };
 
-  // 機器ボタン選択時の処理
-  function selectDevice(device) {
-    selectedDevice = device;
-    
-    // 全ボタンの選択ハイライト解除
-    document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('selected'));
-    
-    // 押されたボタンだけハイライト
-    const targetBtn = document.getElementById(`btn-${device}`);
-    if (targetBtn) {
-      targetBtn.classList.add('selected');
-    }
-    hideError();
-  }
+  // 機器ボタン選択時の処理
+  function selectDevice(device) {
+    selectedDevice = device;
+    
+    // 全ボタンの選択ハイライト解除
+    document.querySelectorAll('.btn-device').forEach(btn => btn.classList.remove('selected'));
+    
+    // 押されたボタンだけハイライト
+    const targetBtn = document.getElementById(`btn-${device}`);
+    if (targetBtn) {
+      targetBtn.classList.add('selected');
+    }
+    hideError();
+  }
 
-  function saveSettings() {
-    const lastName = document.getElementById('lastName').value.trim();
-    const firstName = document.getElementById('firstName').value.trim();
-    const email = document.getElementById('userEmail').value.trim();
+  function saveSettings() {
+    const lastName = document.getElementById('lastName').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const email = document.getElementById('userEmail').value.trim();
 
-    if (!lastName || !firstName || !email) {
-      showError("「姓」「名」「メールアドレス」をすべて入力してください");
-      return false;
-    }
+    if (!lastName || !firstName || !email) {
+      showError("「姓」「名」「メールアドレス」をすべて入力してください");
+      return false;
+    }
 
-    if (!selectedDevice) {
-      showError("対象機器を選択してください");
-      return false;
-    }
+    if (!selectedDevice) {
+      showError("対象機器を選択してください");
+      return false;
+    }
 
-    try {
-      localStorage.setItem('cg_last_name', lastName);
-      localStorage.setItem('cg_first_name', firstName);
-      localStorage.setItem('cg_user_email', email);
-    } catch(e) {
-      console.error(e);
-    }
-    return true;
-  }
+    try {
+      localStorage.setItem('cg_last_name', lastName);
+      localStorage.setItem('cg_first_name', firstName);
+      localStorage.setItem('cg_user_email', email);
+    } catch(e) {
+      console.error(e);
+    }
+    return true;
+  }
 
-  async function submitForm() {
-    hideError();
+  async function submitForm() {
+    hideError();
 
-    if (!saveSettings()) return;
+    if (!saveSettings()) return;
 
-    const lastName = document.getElementById('lastName').value.trim();
-    const firstName = document.getElementById('firstName').value.trim();
-    const fullName = `${lastName} ${firstName}`;
-    const email = document.getElementById('userEmail').value.trim();
-    const device = selectedDevice;
+    const lastName = document.getElementById('lastName').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const fullName = `${lastName} ${firstName}`;
+    const email = document.getElementById('userEmail').value.trim();
+    const device = selectedDevice;
 
-    const accountName = email.includes('@') ? email.split('@')[0] : email;
+    const accountName = email.includes('@') ? email.split('@')[0] : email;
 
-    const mailSubject = encodeURIComponent("【情シス】アカウントロック解除連絡");
-    const mailCc = encodeURIComponent("brn330@nippan-inc.co.jp");
-    const rawBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
-    const mailBody = encodeURIComponent(rawBody);
+    const mailSubject = encodeURIComponent("【情シス】アカウントロック解除連絡");
+    const mailCc = encodeURIComponent("brn330@nippan-inc.co.jp");
+    const rawBody = `${lastName}さん\n\nお疲れ様です。\n\n${device}のアカウントロックを解除しました。\n再度ログインをお試しください。\n\nよろしくお願いいたします。`;
+    const mailBody = encodeURIComponent(rawBody);
 
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${mailCc}&su=${mailSubject}&body=${mailBody}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&cc=${mailCc}&su=${mailSubject}&body=${mailBody}`;
 
-    // チャット通知文面を 🔓【アカウントロック解除依頼】に変更
-    let chatMessage = `🔓 *【アカウントロック解除依頼】*\n`;
-    chatMessage += `*送信者*: ${fullName}\n`;
-    chatMessage += `*アカウント*: ${accountName}\n`;
-    chatMessage += `*対象機器*: ${device}\n`;
-    chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
+    // チャット通知文面を 【アカウントロック解除依頼】に変更
+    let chatMessage = ` *【アカウントロック解除依頼】*\n`;
+    chatMessage += `*送信者*: ${fullName}\n`;
+    chatMessage += `*アカウント*: ${accountName}\n`;
+    chatMessage += `*対象機器*: ${device}\n`;
+    chatMessage += `*本人連絡用メール*: ${gmailUrl}`;
 
-    try {
-      const response = await fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-        body: JSON.stringify({ text: chatMessage })
-      });
+    try {
+      const response = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify({ text: chatMessage })
+      });
 
-      if (response.ok) {
-        showCompleteView();
-      } else {
-        showError(`送信失敗 (${response.status})`);
-      }
-    } catch (err) {
-      showError(`エラー発生: ${err.message || err}`);
-      console.error(err);
-    }
-  }
+      if (response.ok) {
+        showCompleteView();
+      } else {
+        showError(`送信失敗 (${response.status})`);
+      }
+    } catch (err) {
+      showError(`エラー発生: ${err.message || err}`);
+      console.error(err);
+    }
+  }
 
-  function showError(msg) {
-    const errorDiv = document.getElementById('errorStatus');
-    errorDiv.innerText = msg;
-    errorDiv.style.display = 'block';
-  }
+  function showError(msg) {
+    const errorDiv = document.getElementById('errorStatus');
+    errorDiv.innerText = msg;
+    errorDiv.style.display = 'block';
+  }
 
-  function hideError() {
-    const errorDiv = document.getElementById('errorStatus');
-    errorDiv.innerText = "";
-    errorDiv.style.display = 'none';
-  }
+  function hideError() {
+    const errorDiv = document.getElementById('errorStatus');
+    errorDiv.innerText = "";
+    errorDiv.style.display = 'none';
+  }
 
-  function showCompleteView() {
-    document.getElementById('formView').style.display = 'none';
-    document.getElementById('completeView').style.display = 'block';
-  }
+  function showCompleteView() {
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('completeView').style.display = 'block';
+  }
 
-  function resetFormView() {
-    hideError();
-    document.getElementById('completeView').style.display = 'none';
-    document.getElementById('formView').style.display = 'block';
-  }
+  function resetFormView() {
+    hideError();
+    document.getElementById('completeView').style.display = 'none';
+    document.getElementById('formView').style.display = 'block';
+  }
 </script>
 
 </body>
